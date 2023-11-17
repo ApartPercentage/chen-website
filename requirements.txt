@@ -10,5 +10,5 @@ numpy
 scikit-learn
 scipy
 sklearn==0.0.post11
-threadpoolctl==3.2.0
+threadpoolctl==3.1.0
 werkzeug==3.0.1
