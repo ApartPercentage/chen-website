@@ -1,4 +1,14 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, jsonify, render_template, request
+import pickle
+
+with open("models/1/cv.pkl", "rb") as tokenized:
+  tokenizer = pickle.load(tokenized)
+
+with open("models/1/clf.pkl", "rb") as email_model:
+  esc_model = pickle.load(email_model)
+#tokenizer = pickle.load(open("models/1/cv.pkl", "rb"))
+#esc_model = pickle.load(open("models/1/clf.pkl", "rb"))
+
 
 app = Flask(__name__) # created Flask application
 
@@ -29,13 +39,20 @@ def project(project_id):
     # For example: project = get_project_by_id(project_id)
     # Then pass the project details to the template
     # return render_template('project_detail.html', project=project)
-    if project_id == 1:
-      text = ""
-      if request.method == "POST":
-        text = request.form.get('content')
-      return render_template('1.html', text = text)
-    else:
+    project = next((p for p in PROJECTS if p['id'] == project_id), None)
+    if project is None:
       return "Project not found"
+    else:
+      template_name = f"{project_id}.html"
+      return render_template(template_name, project=project)
+
+@app.route('/project/1/predict', methods = ["POST"])
+def predict_1():
+  email= request.form.get("content")
+  tokenized_email = tokenizer.transform([email])
+  prediction = esc_model.predict(tokenized_email)
+  prediction = 1 if prediction == 1 else -1
+  return render_template("1.html", prediction = prediction, email = email)
 
 if __name__ == "__main__":  #check if running app.py as a script, then start the app using Run
   app.run(host = '0.0.0.0', debug = True) #0000 runs locally
