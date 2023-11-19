@@ -1,18 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         Email Spam Classifier
     </title>
     <style>
         body {
-            text-align: center;
+          font-family: 'Arial', sans-serif;
+          text-align: center;
+          margin: 40px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        textarea {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: 'Segoe UI'
         }
 
         button {
-            color: aliceblue;
-            background-color: blue;
+          color: white;
+          background-color: #007BFF;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-right: 10px;
         }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        div.result {
+            margin-top: 20px;
+        }
+
+        h2 {
+            margin-top: 10px;
+        }
+
+        .spam {
+            color: red;
+        }
+
+        .not-spam {
+            color: green;
+        }
+      
     </style>
 </head>
 <body>
@@ -25,7 +79,7 @@
                 <button type="submit">
                     Check
                 </button>
-                <a href="/">Reset</a>
+                <a href="/project/1">Reset</a>
             </div>
         </form>
 
@@ -33,9 +87,9 @@
     <div>
         {% if prediction %}
         {% if prediction == 1 %}
-        <h2 style="color: red">Spam</h2>
+        <h2 class = "spam">Spam</h2>
         {% else %}
-        <h2 style="color: green">Not Spam</h2>
+        <h2 class = "not-spam">Not Spam</h2>
         {% endif %}
         {% endif %}
     </div>
