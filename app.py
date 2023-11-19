@@ -48,7 +48,7 @@ def api_predict_1():
   data = request.get_json(force=True)
   email = data['content']
   prediction = esc_prediction(email)
-  return jsonify({prediction: prediction})
+  return jsonify({'prediction': prediction, 'email': email})
   
 
 if __name__ == "__main__":  #check if running app.py as a script, then start the app using Run
