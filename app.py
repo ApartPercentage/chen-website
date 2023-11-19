@@ -1,14 +1,5 @@
 from flask import Flask, jsonify, render_template, request
-import pickle
-
-with open("models/1/cv.pkl", "rb") as tokenized:
-  tokenizer = pickle.load(tokenized)
-
-with open("models/1/clf.pkl", "rb") as email_model:
-  esc_model = pickle.load(email_model)
-#tokenizer = pickle.load(open("models/1/cv.pkl", "rb"))
-#esc_model = pickle.load(open("models/1/clf.pkl", "rb"))
-
+from utils import esc_prediction
 
 app = Flask(__name__) # created Flask application
 
@@ -48,11 +39,17 @@ def project(project_id):
 
 @app.route('/project/1/predict', methods = ["POST"])
 def predict_1():
-  email= request.form.get("content")
-  tokenized_email = tokenizer.transform([email])
-  prediction = esc_model.predict(tokenized_email)
-  prediction = 1 if prediction == 1 else -1
+  email = request.form.get("content")
+  prediction = esc_prediction(email)
   return render_template("1.html", prediction = prediction, email = email)
+
+@app.route('/project/1/api/predict', methods = ["POST"])
+def api_predict_1():
+  data = request.get_json(force=True)
+  email = data['content']
+  prediction = esc_prediction(email)
+  return jsonify({prediction: prediction})
+  
 
 if __name__ == "__main__":  #check if running app.py as a script, then start the app using Run
   app.run(host = '0.0.0.0', debug = True) #0000 runs locally
