@@ -6,14 +6,9 @@ app = Flask(__name__) # created Flask application
 PROJECTS = [
   {
   'id': 1,
-  'title': 'First',
-  'description': 'First project'
+  'title': 'Email Spam Classifier',
+  'description': 'This is a project used to classify any Spam mails from the texts of emails given. \nAlgorithm used for this model: Naive Bayes'
   },
-  {
-  'id': 2,
-  'title': 'Second',
-  'description': 'Second project'
-  }
 ]
 
 @app.route("/") #register a route to the application
