@@ -38,7 +38,7 @@ torchvision==0.14.1
 tqdm==4.66.1
 transformers==4.30.2
 triton==2.1.0
-typing-extensions==4.8.0
+typing-extensions==4.7.1
 urllib3==2.1.0
 utils==1.0.1
 werkzeug
