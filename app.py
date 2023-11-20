@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, render_template, request
 from utils import esc_prediction
+from mcr import load_model_and_predict
 
 app = Flask(__name__) # created Flask application
 
@@ -9,7 +10,13 @@ PROJECTS = [
   'title': 'Email Spam Classifier',
   'description': 'This is a project used to classify any Spam mails from the texts of emails given. \nAlgorithm used for this model: Naive Bayes'
   },
+  {
+  'id': 2,
+  'title': 'Marvel Character Recognition' 
+  }
 ]
+
+model_path = "models/2"
 
 @app.route("/") #register a route to the application
 def hello_world():
@@ -44,6 +51,23 @@ def api_predict_1():
   email = data['content']
   prediction = esc_prediction(email)
   return jsonify({'prediction': prediction, 'email': email})
+
+@app.route('/project/2/predict', methods=['POST'])
+def predict_2():
+    if 'image' not in request.files:
+        return "No file part"
+
+    image = request.files['image']
+    if image.filename == '':
+        return "No selected file"
+    # Preprocess the image
+    #image_tensor = preprocess_image(image)
+    # Make predictions using your model
+    score, label = load_model_and_predict(model_path, image)
+
+    # Return the prediction result
+    #return f"Predictions: {predictions}"
+    return render_template("2.html", score = score, label = label)
   
 
 if __name__ == "__main__":  #check if running app.py as a script, then start the app using Run

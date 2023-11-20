@@ -1,0 +1,105 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 40px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label {
+            color: white;
+            background-color: #007BFF;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        #file-label {
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            margin-top: 20px;
+        }
+
+        div.result {
+            margin-top: 20px;
+        }
+
+        h2 {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Classification App</h1>
+    <div>
+        <form method="post" action="/" enctype="multipart/form-data">
+            <input type="file" name="file" id="file-input" accept="image/*">
+            <label for="file-input">Choose a file</label>
+            <span id="file-label"></span>
+            <div>
+                <button type="submit">Classify</button>
+            </div>
+        </form>
+    </div>
+    <div class="result">
+        {% if result %}
+            <h2>Result: {{ result[0]['label'] }}</h2>
+            <img src="{{ image_path }}" alt="Uploaded Image">
+        {% endif %}
+    </div>
+
+    <script>
+        // Display the selected file name
+        document.getElementById('file-input').addEventListener('change', function() {
+            var fileName = this.value.split("\\").pop();
+            document.getElementById('file-label').textContent = fileName;
+        });
+    </script>
+</body>
+</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marvel Character Classifier</title>
+</head>
+<body>
+    <h1>Marvel Character Classifier</h1>
+    <form action="/project/2/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Predict</button>
+    </form>
+    <div>
+      {% if score %}
+      <h2>Score: {{score}}</h2>
+      <h2>Label: {{label}}</h2>
+      {% endif %}
+    </div>
+</body>
+</html>
